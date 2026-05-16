@@ -1,0 +1,8 @@
+[build]
+rustflags = ["-C", "target-cpu=generic", "-C", "target-feature=-avx,-avx2,-avx512,-bmi,-bmi2,+sse2"]
+
+[target.x86_64-pc-windows-msvc]
+rustflags = ["-C", "target-cpu=generic", "-C", "target-feature=-avx,-avx2,-avx512,-bmi,-bmi2,+sse2"]
+
+[target.i686-pc-windows-msvc]
+rustflags = ["-C", "target-cpu=generic", "-C", "target-feature=-avx,-avx2,-avx512,-bmi,-bmi2,+sse2"]
