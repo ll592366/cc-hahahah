@@ -278,10 +278,23 @@ export function createComputerUseMcpServer(
     server.setRequestHandler(
       CallToolRequestSchema,
       async (request): Promise<CallToolResult> => {
-        const { screenshot: _s, telemetry: _t, ...result } = await dispatch(
+        const { screenshot, telemetry: _t, ...result } = await dispatch(
           request.params.name,
           request.params.arguments ?? {},
         );
+        // For screenshot/zoom tools, include the image in the response
+        if (screenshot) {
+          const base64 = screenshot.base64;
+          const mimeType = 'image/jpeg';
+          return {
+            content: [
+              { type: 'image', data: base64, mimeType },
+              ...result.content,
+            ],
+            isError: result.isError,
+            telemetry: result.telemetry,
+          };
+        }
         return result;
       },
     );
